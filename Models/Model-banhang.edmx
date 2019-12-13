@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ThucHanhTMDTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ThucHanhTMDTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,6 +57,15 @@ warning 6002: The table/view 'ThucHanhTMDT.dbo.View_News' does not have a primar
           <Property Name="Description" Type="ntext" />
           <Property Name="CateId" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ThucHanhTMDT.dbo.View_news_cate_alias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_news_cate_alias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Alias" Type="varchar" MaxLength="100" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_News_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="News" Type="Self.News" Multiplicity="*" />
@@ -90,13 +99,18 @@ FROM [dbo].[View_Category] AS [View_Category]</DefiningQuery>
 [View_News].[CateId] AS [CateId]
 FROM [dbo].[View_News] AS [View_News]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="View_news_cate_alias" EntityType="Self.View_news_cate_alias" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[View_news_cate_alias].[Alias] AS [Alias], 
+[View_news_cate_alias].[Id] AS [Id]
+FROM [dbo].[View_news_cate_alias] AS [View_news_cate_alias]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_News_Category" Association="Self.FK_News_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="News" EntitySet="News" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ThucHanhTMDTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -172,7 +186,15 @@ FROM [dbo].[View_News] AS [View_News]</DefiningQuery>
             <End Role="Category" EntitySet="Categories" />
             <End Role="News" EntitySet="News" />
           </AssociationSet>
+          <EntitySet Name="View_news_cate_alias" EntityType="ThucHanhTMDTModel.View_news_cate_alias" />
         </EntityContainer>
+        <EntityType Name="View_news_cate_alias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Alias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -229,6 +251,14 @@ FROM [dbo].[View_News] AS [View_News]</DefiningQuery>
                 <ScalarProperty Name="Alias" ColumnName="Alias" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CateId" ColumnName="CateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_news_cate_alias">
+            <EntityTypeMapping TypeName="ThucHanhTMDTModel.View_news_cate_alias">
+              <MappingFragment StoreEntitySet="View_news_cate_alias">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

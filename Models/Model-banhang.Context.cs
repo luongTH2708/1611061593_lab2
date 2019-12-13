@@ -30,5 +30,6 @@ namespace _1611061593_lab2.Models
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<View_Category> View_Category { get; set; }
         public DbSet<View_News> View_News { get; set; }
+        public DbSet<View_news_cate_alias> View_news_cate_alias { get; set; }
     }
 }

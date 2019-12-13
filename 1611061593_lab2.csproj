@@ -164,6 +164,9 @@
     <Compile Include="Models\View_News.cs">
       <DependentUpon>Model-banhang.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_news_cate_alias.cs">
+      <DependentUpon>Model-banhang.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
